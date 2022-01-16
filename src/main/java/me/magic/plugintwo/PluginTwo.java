@@ -11,9 +11,12 @@ import me.magic.plugintwo.commands.BoomCommand;
 import me.magic.plugintwo.commands.Fly;
 import me.magic.plugintwo.commands.OpenCommand;
 import me.magic.plugintwo.commands.SmeltCountCommand;
-import me.magic.plugintwo.events.*;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.reflections.Reflections;
+
+import java.lang.reflect.InvocationTargetException;
 
 
 public final class PluginTwo extends JavaPlugin {
@@ -28,12 +31,20 @@ public final class PluginTwo extends JavaPlugin {
         System.out.println("PluginTwo start!");
 
         // Events
-        getServer().getPluginManager().registerEvents(new SnowballEvents(), this);
-        getServer().getPluginManager().registerEvents(new GoldOreBreak(), this);
-        getServer().getPluginManager().registerEvents(new ZombieSnowball(), this);
-        getServer().getPluginManager().registerEvents(new DeathEvent(), this);
-        getServer().getPluginManager().registerEvents(new CookListener(), this);
-        getServer().getPluginManager().registerEvents(new Listeners(), this);
+        String packageName = getClass().getPackage().getName();
+
+        for (Class<?> clazz : new Reflections(packageName + ".listeners")
+                .getSubTypesOf(Listener.class)
+        ) {
+            try {
+                Listener listener = (Listener) clazz
+                        .getDeclaredConstructor()
+                        .newInstance();
+                getServer().getPluginManager().registerEvents(listener, this);
+            } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
 
         // Commands
         getCommand("fly").setExecutor(new Fly());

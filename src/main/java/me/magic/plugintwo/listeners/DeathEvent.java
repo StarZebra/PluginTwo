@@ -1,4 +1,4 @@
-package me.magic.plugintwo.events;
+package me.magic.plugintwo.listeners;
 
 import me.magic.plugintwo.PluginTwo;
 import org.bukkit.ChatColor;
