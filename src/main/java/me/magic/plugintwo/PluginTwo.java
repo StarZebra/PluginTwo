@@ -7,13 +7,9 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.wrappers.EnumWrappers;
 import me.magic.plugintwo.commands.BoomCommand;
 import me.magic.plugintwo.commands.Fly;
-import me.magic.plugintwo.events.DeathEvent;
-import me.magic.plugintwo.events.GoldOreBreak;
-import me.magic.plugintwo.events.SnowballEvents;
-import me.magic.plugintwo.events.ZombieSnowball;
+import me.magic.plugintwo.events.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,6 +30,7 @@ public final class PluginTwo extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new GoldOreBreak(), this);
         getServer().getPluginManager().registerEvents(new ZombieSnowball(), this);
         getServer().getPluginManager().registerEvents(new DeathEvent(), this);
+        getServer().getPluginManager().registerEvents(new BlockPlace(), this);
 
         // Commands
         getCommand("fly").setExecutor(new Fly());
@@ -59,26 +56,6 @@ public final class PluginTwo extends JavaPlugin {
 
                 //p.sendMessage("INBOUND PACKET: x: " + x + " y: " + y + " z: " + z);
                 //p.sendMessage("ON GROUND? " + isOnGround);
-
-            }
-        });
-
-        manager.addPacketListener(new PacketAdapter(this, PacketType.Play.Client.USE_ENTITY) {
-            @Override
-            public void onPacketReceiving(PacketEvent event) {
-
-                PacketContainer packet = event.getPacket();
-
-                int entityID = packet.getIntegers().read(0);
-
-                EnumWrappers.Hand hand = packet.getEnumEntityUseActions().read(0).getHand();
-                EnumWrappers.EntityUseAction action = packet.getEnumEntityUseActions().read(0).getAction();
-
-                if(hand == EnumWrappers.Hand.MAIN_HAND && action == EnumWrappers.EntityUseAction.INTERACT){
-
-                    event.getPlayer().sendMessage("EntityID: " + entityID);
-
-                }
 
             }
         });
