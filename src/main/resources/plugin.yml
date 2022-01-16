@@ -1,0 +1,13 @@
+name: PluginTwo
+version: '${project.version}'
+main: me.magic.plugintwo.PluginTwo
+api-version: 1.18
+depend: [ProtocolLib]
+authors: [ Magic, YoMother ]
+description: this plugin two flushed
+commands:
+  fly:
+    description: Toggle fly mode.
+    usage: /<command>
+  boom:
+    description: boom
