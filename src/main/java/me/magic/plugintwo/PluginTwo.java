@@ -9,6 +9,8 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import me.magic.plugintwo.commands.BoomCommand;
 import me.magic.plugintwo.commands.Fly;
+import me.magic.plugintwo.commands.OpenCommand;
+import me.magic.plugintwo.commands.SmeltCountCommand;
 import me.magic.plugintwo.events.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,11 +32,14 @@ public final class PluginTwo extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new GoldOreBreak(), this);
         getServer().getPluginManager().registerEvents(new ZombieSnowball(), this);
         getServer().getPluginManager().registerEvents(new DeathEvent(), this);
-        getServer().getPluginManager().registerEvents(new BlockPlace(), this);
+        getServer().getPluginManager().registerEvents(new CookListener(), this);
+        getServer().getPluginManager().registerEvents(new Listeners(), this);
 
         // Commands
         getCommand("fly").setExecutor(new Fly());
         getCommand("boom").setExecutor(new BoomCommand());
+        getCommand("smeltcount").setExecutor(new SmeltCountCommand());
+        getCommand("pv").setExecutor(new OpenCommand());
 
 
         //Creating a packet listener

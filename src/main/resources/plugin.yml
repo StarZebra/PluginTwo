@@ -11,3 +11,7 @@ commands:
     usage: /<command>
   boom:
     description: boom
+  smeltcount:
+    description: smelt
+  pv:
+    description: yay
