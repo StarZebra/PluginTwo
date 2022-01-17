@@ -1,18 +1,14 @@
 package me.magic.plugintwo.listeners;
 
-import me.magic.plugintwo.PluginTwo;
 import org.bukkit.World;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.projectiles.ProjectileSource;
 
 import java.util.List;
-import java.util.Random;
-
 
 public class SnowballEvents implements Listener {
 
