@@ -9,11 +9,12 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.projectiles.ProjectileSource;
-import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.List;
+import java.util.Random;
+
 
 public class SnowballEvents implements Listener {
-
-    Plugin plugin = PluginTwo.getPlugin();
 
     @EventHandler
     public void onSnowballHit(ProjectileHitEvent e) {
@@ -25,48 +26,32 @@ public class SnowballEvents implements Listener {
         if(hitentity != null) {
             if(shooter instanceof Player) {
 
-                new BukkitRunnable() {
-                    int i = 0;
+                for(int i = 0; i < 3; i++){
 
-                    public void run() {
-                        if(i < 3) {
+                    Entity snowball = hitentity.getWorld().spawnEntity(hitentity.getLocation().add(0,1.2,0), EntityType.SNOWBALL);
+                    List<Entity> nearest = snowball.getNearbyEntities(10,10,10);
 
-                            Entity snowball = hitentity.getWorld().spawnEntity(hitentity.getLocation().add(0,1.2,0), EntityType.SNOWBALL);
+                    for(Entity target : nearest) {
+                        if(snowball.isDead()) return;
+                        if(!hitentity.hasLineOfSight(target)) return;
+                        if(target instanceof LivingEntity && target != snowball && target != shooter && target != hitentity) {
 
-                            for(Entity entity : snowball.getNearbyEntities(10,10,10)) {
-                                if(!snowball.isDead()) {
-                                    if(snowball.getLocation().distance(entity.getLocation() ) <= 10) {
-                                        if(entity != snowball && entity != shooter && entity != hitentity) {
-                                            if(entity instanceof LivingEntity) {
-                                                LivingEntity livingentity = (LivingEntity) entity;
+                            snowball.setVelocity(target.getLocation().subtract(hitentity.getLocation()).toVector().multiply(0.2));
 
-                                                snowball.setVelocity(livingentity.getLocation().add(0,1,0).subtract(hitentity.getLocation()).toVector().multiply(0.2));
-
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            i++;
-                        }else{
-                            cancel();
                         }
                     }
-                }.runTaskTimer(plugin, 0, 0);
+                }
             }else if(shooter instanceof Snowman) {
                 e.getHitEntity().setFireTicks(200);
             }
-
         }else{
 
-            if(shooter instanceof Player) {
+            if(!(shooter instanceof Player)) return;
+            if(e.getEntityType().equals(EntityType.SNOWBALL)) {
 
-                if(e.getEntityType().equals(EntityType.SNOWBALL)) {
+                World world = e.getEntity().getWorld();
+                world.spawnEntity(e.getEntity().getLocation().subtract(0, 0.1, 0), EntityType.SNOWMAN);
 
-                    World world = e.getEntity().getWorld();
-                    world.spawnEntity(e.getEntity().getLocation().subtract(0, 0.1, 0), EntityType.SNOWMAN);
-
-                }
             }
         }
     }
