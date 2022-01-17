@@ -5,7 +5,10 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPlayer;
@@ -42,6 +45,12 @@ public class PacketEvents implements Listener {
         Player p = e.getPlayer(); // Bukkit
         CraftPlayer craftPlayer = (CraftPlayer) p; // CraftBukkit
         ServerPlayer serverPlayer = craftPlayer.getHandle(); // NMS
+
+        ServerGamePacketListenerImpl listener = serverPlayer.connection;
+
+        ClientboundGameEventPacket packet = new ClientboundGameEventPacket(ClientboundGameEventPacket.PUFFER_FISH_STING, 0);
+        listener.send(packet);
+        serverPlayer.sendMessage(Component.nullToEmpty("Puffer fish stingging"), serverPlayer.getUUID());
 
     }
 
