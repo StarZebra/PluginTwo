@@ -1,4 +1,4 @@
 # PluginTwo
 This PluginTwo :flushed:
 
-Not PluginOne 
+Not PluginOne smh
