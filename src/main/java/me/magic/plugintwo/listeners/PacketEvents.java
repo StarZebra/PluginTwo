@@ -42,9 +42,9 @@ public class PacketEvents implements Listener {
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
 
-        Player p = e.getPlayer(); // Bukkit
-        CraftPlayer craftPlayer = (CraftPlayer) p; // CraftBukkit
-        ServerPlayer serverPlayer = craftPlayer.getHandle(); // NMS
+        Player p = e.getPlayer(); //Bukkit
+        CraftPlayer craftPlayer = (CraftPlayer) p; //CraftBukkit
+        ServerPlayer serverPlayer = craftPlayer.getHandle(); //NMS
 
         ServerGamePacketListenerImpl listener = serverPlayer.connection;
 
