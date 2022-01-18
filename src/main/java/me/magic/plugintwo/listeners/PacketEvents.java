@@ -50,7 +50,7 @@ public class PacketEvents implements Listener {
 
         ClientboundGameEventPacket packet = new ClientboundGameEventPacket(ClientboundGameEventPacket.PUFFER_FISH_STING, 0);
         listener.send(packet);
-        serverPlayer.sendMessage(Component.nullToEmpty("Puffer fish stingging"), serverPlayer.getUUID());
+        serverPlayer.sendMessage(Component.nullToEmpty("Puffer fish stinging"), serverPlayer.getUUID());
 
     }
 
