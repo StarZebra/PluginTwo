@@ -53,5 +53,4 @@ public class PacketEvents implements Listener {
         serverPlayer.sendMessage(Component.nullToEmpty("Puffer fish stinging"), serverPlayer.getUUID());
 
     }
-
 }
