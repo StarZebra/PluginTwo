@@ -50,5 +50,4 @@ public final class PluginTwo extends JavaPlugin {
         return plugin;
 
     }
-
 }
