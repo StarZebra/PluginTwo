@@ -43,7 +43,6 @@ public final class PluginTwo extends JavaPlugin {
         getCommand("boom").setExecutor(new BoomCommand());
         getCommand("smeltcount").setExecutor(new SmeltCountCommand());
         getCommand("pv").setExecutor(new OpenCommand());
-
     }
 
     public static PluginTwo getPlugin() {
