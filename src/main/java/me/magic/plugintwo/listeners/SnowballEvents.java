@@ -33,6 +33,7 @@ public class SnowballEvents implements Listener {
                         if(target instanceof LivingEntity && target != snowball && target != shooter && target != hitentity) {
 
                             snowball.setVelocity(target.getLocation().subtract(hitentity.getLocation()).toVector().multiply(0.2));
+                            nearest.remove(target);
 
                         }
                     }
