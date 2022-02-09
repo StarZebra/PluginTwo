@@ -1,9 +1,7 @@
 package me.magic.plugintwo;
 
-import me.magic.plugintwo.commands.BoomCommand;
-import me.magic.plugintwo.commands.Fly;
-import me.magic.plugintwo.commands.OpenCommand;
-import me.magic.plugintwo.commands.SmeltCountCommand;
+import me.magic.plugintwo.commands.*;
+import me.magic.plugintwo.utils.Util;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
@@ -20,7 +18,7 @@ public final class PluginTwo extends JavaPlugin {
 
         plugin = this;
 
-        System.out.println("PluginTwo start!");
+        Util.log("&aFixing all errors...");
 
         // Events
         String packageName = getClass().getPackage().getName();
@@ -43,10 +41,16 @@ public final class PluginTwo extends JavaPlugin {
         getCommand("boom").setExecutor(new BoomCommand());
         getCommand("smeltcount").setExecutor(new SmeltCountCommand());
         getCommand("pv").setExecutor(new OpenCommand());
+        getCommand("ping").setExecutor(new PingCommand());
     }
 
     public static PluginTwo getPlugin() {
         return plugin;
 
+    }
+
+    @Override
+    public void onDisable() {
+        Util.log("&cUnfixing all errors...");
     }
 }

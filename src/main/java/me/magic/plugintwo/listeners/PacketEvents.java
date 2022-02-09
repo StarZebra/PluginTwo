@@ -5,7 +5,6 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
@@ -29,7 +28,6 @@ public class PacketEvents implements Listener {
 
             ProtocolManager manager = ProtocolLibrary.getProtocolManager();
             PacketContainer packet = manager.createPacket(PacketType.Play.Server.SET_ACTION_BAR_TEXT);
-            packet.getModifier().writeDefaults();
             packet.getChatComponents().write(0, WrappedChatComponent.fromText(ChatColor.AQUA + "Mined Dimond!"));
             try {
                 manager.sendServerPacket(e.getPlayer(), packet);
@@ -39,18 +37,18 @@ public class PacketEvents implements Listener {
         }
     }
 
-    @EventHandler
-    public void onMove(PlayerMoveEvent e) {
+    //@EventHandler
+    //public void onMove(PlayerMoveEvent e) {
 
-        Player p = e.getPlayer(); //Bukkit
-        CraftPlayer craftPlayer = (CraftPlayer) p; //CraftBukkit
-        ServerPlayer serverPlayer = craftPlayer.getHandle(); //NMS
+        //Player p = e.getPlayer(); //Bukkit
+        //CraftPlayer craftPlayer = (CraftPlayer) p; //CraftBukkit
+       // ServerPlayer serverPlayer = craftPlayer.getHandle(); //NMS
 
-        ServerGamePacketListenerImpl listener = serverPlayer.connection;
+        //ServerGamePacketListenerImpl listener = serverPlayer.connection;
 
-        ClientboundGameEventPacket packet = new ClientboundGameEventPacket(ClientboundGameEventPacket.PUFFER_FISH_STING, 0);
-        listener.send(packet);
-        serverPlayer.sendMessage(Component.nullToEmpty("Puffer fish stinging"), serverPlayer.getUUID());
+        //ClientboundGameEventPacket packet = new ClientboundGameEventPacket(ClientboundGameEventPacket.PUFFER_FISH_STING, 0);
+        //listener.send(packet);
+        //serverPlayer.sendMessage(Component.nullToEmpty("Puffer fish stinging"), serverPlayer.getUUID());
 
-    }
+    //}
 }

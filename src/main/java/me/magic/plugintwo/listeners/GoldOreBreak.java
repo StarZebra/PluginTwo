@@ -1,10 +1,5 @@
 package me.magic.plugintwo.listeners;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import me.magic.plugintwo.PluginTwo;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -14,8 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.lang.reflect.InvocationTargetException;
 
 public class GoldOreBreak implements Listener {
 
