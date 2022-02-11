@@ -1,8 +1,6 @@
 package me.magic.plugintwo.listeners;
 
-import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.block.data.type.Snow;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
