@@ -52,7 +52,6 @@ public class SnowballEvents implements Listener {
 
                     }
 
-
                 }
             }else if(shooter instanceof Snowman) {
                 e.getHitEntity().setFireTicks(200);
