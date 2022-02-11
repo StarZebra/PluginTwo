@@ -48,8 +48,6 @@ public class Listeners implements Listener {
                     })
                     .forEach(itemStack -> prunedItems.add(itemStack));
 
-            System.out.println("size: " + prunedItems.size());
-
             VaultUtils.storeItems(prunedItems, p);
 
         }
