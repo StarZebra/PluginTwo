@@ -1,6 +1,8 @@
 package me.magic.plugintwo.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.block.data.type.Snow;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,7 +10,9 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.projectiles.ProjectileSource;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SnowballEvents implements Listener {
 
@@ -17,26 +21,40 @@ public class SnowballEvents implements Listener {
 
         ProjectileSource shooter = e.getEntity().getShooter();
         LivingEntity hitentity = (LivingEntity) e.getHitEntity();
+        Random random = new Random();
 
+        if(!(e.getEntity() instanceof Snowball)) return;
 
         if(hitentity != null) {
             if(shooter instanceof Player) {
 
-                for(int i = 0; i < 3; i++){
+                List<Entity> nearest = new ArrayList<>(hitentity.getNearbyEntities(10,10,10));
+                List<Entity> finalNearest = new ArrayList<>();
 
-                    Entity snowball = hitentity.getWorld().spawnEntity(hitentity.getLocation().add(0,1.2,0), EntityType.SNOWBALL);
-                    List<Entity> nearest = snowball.getNearbyEntities(10,10,10);
+                nearest.forEach(entity -> {
+                    if(entity instanceof LivingEntity) finalNearest.add(entity);
+                    if(entity instanceof Player) finalNearest.remove(entity);
+                });
 
-                    for(Entity target : nearest) {
-                        if(snowball.isDead()) return;
-                        if(!hitentity.hasLineOfSight(target)) return;
-                        if(target instanceof LivingEntity && target != snowball && target != shooter && target != hitentity) {
+                for(int i = 0; i < 3; i++) {
 
-                            snowball.setVelocity(target.getLocation().subtract(hitentity.getLocation()).toVector().multiply(0.2));
-                            nearest.remove(target);
+                    if(finalNearest.size() > 0){
+                        Entity snowball = hitentity.getWorld().spawnEntity(hitentity.getLocation().add(0, 1.2, 0), EntityType.SNOWBALL);
+                        Entity target = finalNearest.get(random.nextInt(finalNearest.size()));
 
+                        if(snowball.isDead()) continue;
+                        if(!hitentity.hasLineOfSight(target)) continue;
+                        if(!(target instanceof LivingEntity) || target == snowball || target == shooter || target == hitentity){
+                            snowball.remove();
+                            continue;
                         }
+
+                        snowball.setVelocity(target.getLocation().subtract(hitentity.getLocation()).toVector().multiply(0.2));
+                        finalNearest.remove(target);
+
                     }
+
+
                 }
             }else if(shooter instanceof Snowman) {
                 e.getHitEntity().setFireTicks(200);
