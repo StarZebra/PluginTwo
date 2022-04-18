@@ -1,6 +1,7 @@
 package me.magic.plugintwo.listeners;
 
 import me.magic.plugintwo.PluginTwo;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -10,6 +11,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.List;
 
 // implementing Listener to this class to be able to listen to events 
 public class ZombieSnowball implements Listener {
@@ -30,25 +33,25 @@ public class ZombieSnowball implements Listener {
             Entity target = e.getTarget();
 
 // checking if the target is a player
-            if(target instanceof Player) {
+            if(target instanceof Player player) {
 
 // creating a list for entities called "nearest" that contains all nearbyentities of the zombie in a 10x10x10 radius xyz
                 List<Entity> nearest = zombie.getNearbyEntities(10,10,10);
 
 //creating a simple loop that runs every 10 ticks
                 new BukkitRunnable() {
-                    public void run() {
 
+                    public void run() {
+                        if(zombie.isDead()) return;
 
                         // for every entity that is the target in the "nearest" list created before we run the code below
                         for(Entity target : nearest) {
-                            //if the target can fly we return so that the code below executes, this is to make sure the player isnt in creative
-                            if((Player) target).getAllowFlight() return;
+                            if(player.getGameMode() != GameMode.SURVIVAL) return;
 
                             // creating a snowball entity at the zombies location +1.3y 
                             Entity snowball = zombie.getWorld().spawnEntity(zombie.getLocation().add(0,1.3,0), EntityType.SNOWBALL);
                             //sets the snowballs velocity to targets locations minus zombies location and then make that a vector and multiply by 0.2 for speed
-                            snowball.setVelocity(target.getLocation().subtract(zombie.getLocation()).toVector().multiply(0.2))
+                            snowball.setVelocity(target.getLocation().subtract(zombie.getLocation()).toVector().multiply(0.2));
 
                         }
                     }
